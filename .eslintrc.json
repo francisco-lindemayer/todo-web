@@ -26,6 +26,8 @@
    "plugins": ["react","@typescript-eslint", "react-hooks","prettier"],
    "rules": {
       "import/no-unresolved": 0,
+      "no-console": "off",
+      "class-methods-use-this": "off",
       "no-use-before-define": "off",
       "no-else-return": "off",
       "react/require-default-props": "off",
@@ -44,10 +46,11 @@
            "singleQuote": true,
            "trailingComma": "all",
            "arrowParens": "avoid",
-           "endOfLine": "auto"
+           "endOfLine": "auto",
+           "print-width": 100
          }
        ],
-      "max-len": ["warn", { "code": 80 }],
+      "max-len": ["warn", { "code": 100 }],
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
       "import/prefer-default-export": "off",
