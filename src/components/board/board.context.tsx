@@ -8,7 +8,7 @@ interface BoardContextInterface {
   todos: TodoInterface[];
   requestDataReload: () => void;
   createTodo: (todoData: TodoCreateInterface) => Promise<boolean>;
-  // indexTodo: (todoId: string) => boolean;
+  indexTodo: (todoId: string) => Promise<TodoInterface | undefined>;
   // updateTodo: (todoData: TodoCreateInterface) => boolean;
   // deleteTodo: (todoId: string) => boolean;
   // changeStatus: (todoId: string, changeStatusTo: TodoStatusEnum) => boolean;
@@ -45,6 +45,17 @@ export function BoardProvider({
     _setTodos(reloadedTodoList);
   };
 
+  const indexTodo = async (
+    todoId: string,
+  ): Promise<TodoInterface | undefined> => {
+    try {
+      const todo = await TodoService.index(todoId);
+      return todo;
+    } catch (error) {
+      return undefined;
+    }
+  };
+
   const requestDataReload = (): void => {
     _setListMustBeLoad(true);
   };
@@ -54,7 +65,9 @@ export function BoardProvider({
   }, [listMustBeLoad]);
 
   return (
-    <BoardContext.Provider value={{ todos, requestDataReload, createTodo }}>
+    <BoardContext.Provider
+      value={{ todos, requestDataReload, createTodo, indexTodo }}
+    >
       {children}
     </BoardContext.Provider>
   );
