@@ -15,12 +15,10 @@ class TodoService {
       if (environment.mockmode) {
         return await indexTodoMock();
       }
-      const { data } = await api.post<TodoInterface>(`${prefix}`, {
-        todoData,
-      });
+      const { data } = await api.post<TodoInterface>(`${prefix}`, todoData);
       return data;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 
@@ -32,7 +30,7 @@ class TodoService {
       const { data } = await api.get<TodoInterface[]>(`${prefix}`);
       return data;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 
@@ -44,7 +42,7 @@ class TodoService {
       const { data } = await api.get<TodoInterface>(`${prefix}/${todoId}`);
       return data;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 
@@ -56,12 +54,13 @@ class TodoService {
       if (environment.mockmode) {
         return await indexTodoMock();
       }
-      const { data } = await api.put<TodoInterface>(`${prefix}/${todoId}`, {
+      const { data } = await api.put<TodoInterface>(
+        `${prefix}/${todoId}`,
         todoData,
-      });
+      );
       return data;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 
@@ -73,7 +72,7 @@ class TodoService {
       await api.delete<TodoInterface>(`${prefix}/${todoId}`);
       return;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 
@@ -93,7 +92,7 @@ class TodoService {
       );
       return data;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 
@@ -110,7 +109,7 @@ class TodoService {
       });
       return data;
     } catch (error) {
-      throw new Error(handleServiceError(error));
+      throw handleServiceError(error);
     }
   }
 }

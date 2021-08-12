@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles({
+  modal: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -10,11 +14,13 @@ export const useStyles = makeStyles({
     marginTop: '15vh',
     background: '#ccc9dc',
     borderRadius: '8px',
+    padding: '32px',
   },
-  opened: {
-    color: 'grey',
+  field: {
+    margin: '8px',
   },
-  conclude: {
-    color: 'green',
+  multiline: {
+    margin: '8px',
+    height: '300px',
   },
 });

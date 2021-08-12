@@ -3,11 +3,12 @@ import TodoService from '../../services/todo.service';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
 import { TodoCreateInterface } from '../../interfaces/todo-create.interface';
 import { TodoInterface } from '../../interfaces/todo.interface';
+import handleServiceError from '../../utils/error-handler';
 
 interface BoardContextInterface {
   todos: TodoInterface[];
   requestDataReload: () => void;
-  createTodo: (todoData: TodoCreateInterface) => Promise<boolean>;
+  createTodo: (todoData: TodoCreateInterface) => Promise<string | undefined>;
   indexTodo: (todoId: string) => Promise<TodoInterface | undefined>;
   // updateTodo: (todoData: TodoCreateInterface) => boolean;
   // deleteTodo: (todoId: string) => boolean;
@@ -29,14 +30,11 @@ export function BoardProvider({
 
   const createTodo = async (
     todoData: TodoCreateInterface,
-  ): Promise<boolean> => {
-    try {
-      const createdTodo = await TodoService.create(todoData);
-      _setTodos({ ...todos, ...createdTodo });
-      return true;
-    } catch (error) {
-      return false;
-    }
+  ): Promise<string | undefined> => {
+    const createdTodo = await TodoService.create(todoData);
+    console.log('criou?', createdTodo);
+    _setTodos([...todos, createdTodo]);
+    return undefined;
   };
 
   const showTodos = async (): Promise<void> => {

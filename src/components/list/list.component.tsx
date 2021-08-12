@@ -1,9 +1,11 @@
-import React from 'react';
-import { Paper, List } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Paper, List, Box, Tooltip, Fab } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
 import { useBoardContext } from '../board/board.context';
 import { CardComponent } from '../card/card.component';
 import { useStyles } from './list.styles';
+import { CardCreateComponent } from '../card/card-create.component';
 
 interface ListComponentProps {
   status: TodoStatusEnum;
@@ -12,9 +14,32 @@ interface ListComponentProps {
 export function ListComponent({ status }: ListComponentProps): JSX.Element {
   const classes = useStyles();
   const { todos } = useBoardContext();
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
+
+  const handleOpenCreate = (): void => {
+    setOpenCreate(true);
+  };
+
+  const handleCloseCreate = (): void => {
+    setOpenCreate(false);
+  };
 
   return (
     <Paper className={classes.container}>
+      <div className={classes.header}>
+        {status === TodoStatusEnum.OPENED && (
+          <Tooltip title="Adicionar tarefa">
+            <Fab
+              aria-label="add"
+              className={classes.fab}
+              size="small"
+              onClick={handleOpenCreate}
+            >
+              <Add />
+            </Fab>
+          </Tooltip>
+        )}
+      </div>
       <List className={classes.list}>
         {todos
           .filter(todo => todo.status === status)
@@ -22,6 +47,11 @@ export function ListComponent({ status }: ListComponentProps): JSX.Element {
             <CardComponent key={todo.id} index={index} todo={todo} />
           ))}
       </List>
+      <CardCreateComponent
+        open={openCreate}
+        onClose={handleCloseCreate}
+        onCreate={() => setOpenCreate(false)}
+      />
     </Paper>
   );
 }
