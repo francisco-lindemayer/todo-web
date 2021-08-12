@@ -8,14 +8,11 @@ import handleServiceError from '../../utils/error-handler';
 interface BoardContextInterface {
   todos: TodoInterface[];
   requestDataReload: () => void;
-  createTodo: (todoData: TodoCreateInterface) => Promise<string | undefined>;
+  createTodo: (todoData: TodoCreateInterface) => Promise<void>;
   indexTodo: (todoId: string) => Promise<TodoInterface | undefined>;
-  updateTodo: (
-    todoId: string,
-    todoData: TodoCreateInterface,
-  ) => Promise<string | undefined>;
-  // deleteTodo: (todoId: string) => boolean;
-  // changeStatus: (todoId: string, changeStatusTo: TodoStatusEnum) => boolean;
+  updateTodo: (todoId: string, todoData: TodoCreateInterface) => Promise<void>;
+  deleteTodo: (todoId: string) => void;
+  changeStatus: (todoId: string, changeStatusTo: TodoStatusEnum) => void;
   // randomTodoGeneration: () => void;
 }
 
@@ -31,21 +28,20 @@ export function BoardProvider({
   const [todos, _setTodos] = useState<TodoInterface[]>([]);
   const [listMustBeLoad, _setListMustBeLoad] = useState<boolean>(true);
 
-  const createTodo = async (
-    todoData: TodoCreateInterface,
-  ): Promise<string | undefined> => {
+  const createTodo = async (todoData: TodoCreateInterface): Promise<void> => {
     const createdTodo = await TodoService.create(todoData);
     _setTodos([...todos, createdTodo]);
-    return undefined;
   };
 
   const updateTodo = async (
     todoId: string,
     todoData: TodoCreateInterface,
-  ): Promise<string | undefined> => {
+  ): Promise<void> => {
     const updatedTodo = await TodoService.update(todoId, todoData);
-    _setTodos([...todos, updatedTodo]);
-    return undefined;
+    _setTodos([
+      ...todos.filter(todo => todo.id !== updatedTodo.id),
+      updatedTodo,
+    ]);
   };
 
   const showTodos = async (): Promise<void> => {
@@ -65,6 +61,23 @@ export function BoardProvider({
     }
   };
 
+  const deleteTodo = async (todoId: string): Promise<void> => {
+    await TodoService.delete(todoId);
+    const todosWithoutItemDelete = todos.filter(todo => todo.id !== todoId);
+    _setTodos(todosWithoutItemDelete);
+  };
+
+  const changeStatus = async (
+    todoId: string,
+    changeStatusTo: TodoStatusEnum,
+  ): Promise<void> => {
+    const updatedTodo = await TodoService.changeStatus(todoId, changeStatusTo);
+    _setTodos([
+      ...todos.filter(todo => todo.id !== updatedTodo.id),
+      updatedTodo,
+    ]);
+  };
+
   const requestDataReload = (): void => {
     _setListMustBeLoad(true);
   };
@@ -75,7 +88,15 @@ export function BoardProvider({
 
   return (
     <BoardContext.Provider
-      value={{ todos, requestDataReload, createTodo, indexTodo, updateTodo }}
+      value={{
+        todos,
+        requestDataReload,
+        createTodo,
+        indexTodo,
+        updateTodo,
+        deleteTodo,
+        changeStatus,
+      }}
     >
       {children}
     </BoardContext.Provider>
