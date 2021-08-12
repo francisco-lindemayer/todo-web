@@ -11,6 +11,18 @@ export const useStyles = makeStyles({
     minHeight: '60px',
     marginRight: '32px',
   },
+  header: {
+    position: 'fixed',
+    width: '225px',
+    background: '#2b6bc4',
+    zIndex: 1,
+  },
+  boxTitle: {
+    marginTop: '8px',
+    padding: '8px',
+    borderRadius: '8px',
+    background: '#3f51b5',
+  },
   title: {
     color: '#ffff',
   },
@@ -27,6 +39,7 @@ export const useStyles = makeStyles({
   list: {
     display: 'flex',
     flexDirection: 'column',
+    marginTop: '40px',
   },
   fab: {
     margin: '8px',

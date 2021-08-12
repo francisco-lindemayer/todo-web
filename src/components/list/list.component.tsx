@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Paper, List, Box, Tooltip, Fab, Typography } from '@material-ui/core';
+import { Paper, List, Tooltip, Fab, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { TodoStatusEnum } from '../../enum/todo-status.enum';
+import {
+  TodoStatusEnum,
+  TodoStatusLabelEnum,
+} from '../../enum/todo-status.enum';
 import { useBoardContext } from '../board/board.context';
 import { CardComponent } from '../card/card.component';
 import { useStyles } from './list.styles';
@@ -41,7 +44,13 @@ export function ListComponent({ status }: ListComponentProps): JSX.Element {
         )}
       </div>
       <Paper className={classes.paper}>
-        <Typography className={classes.title}>{status}</Typography>
+        <div className={classes.header}>
+          <div className={classes.boxTitle}>
+            <Typography className={classes.title}>
+              {TodoStatusLabelEnum[status]}
+            </Typography>
+          </div>
+        </div>
         <List className={classes.list}>
           {todos
             .filter(todo => todo.status === status)
