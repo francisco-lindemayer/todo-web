@@ -13,7 +13,7 @@ interface BoardContextInterface {
   updateTodo: (todoId: string, todoData: TodoCreateInterface) => Promise<void>;
   deleteTodo: (todoId: string) => void;
   changeStatus: (todoId: string, changeStatusTo: TodoStatusEnum) => void;
-  // randomTodoGeneration: () => void;
+  randomTodoGeneration: () => void;
 }
 
 const BoardContext = createContext<BoardContextInterface>(
@@ -78,6 +78,11 @@ export function BoardProvider({
     ]);
   };
 
+  const randomTodoGeneration = async (): Promise<void> => {
+    const createdTodos = await TodoService.randomGeneration();
+    _setTodos([...todos, ...createdTodos]);
+  };
+
   const requestDataReload = (): void => {
     _setListMustBeLoad(true);
   };
@@ -96,6 +101,7 @@ export function BoardProvider({
         updateTodo,
         deleteTodo,
         changeStatus,
+        randomTodoGeneration,
       }}
     >
       {children}

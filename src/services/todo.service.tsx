@@ -96,17 +96,12 @@ class TodoService {
     }
   }
 
-  public async randomGeneration(
-    todoId: string,
-    status: TodoStatusEnum,
-  ): Promise<TodoInterface> {
+  public async randomGeneration(): Promise<TodoInterface[]> {
     try {
       if (environment.mockmode) {
-        return indexTodoMock();
+        return showTodoMock();
       }
-      const { data } = await api.post<TodoInterface>(`${prefix}/random`, {
-        status,
-      });
+      const { data } = await api.post<TodoInterface[]>(`${prefix}/random`);
       return data;
     } catch (error) {
       throw handleServiceError(error);
