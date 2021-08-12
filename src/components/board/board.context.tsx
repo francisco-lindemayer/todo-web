@@ -3,7 +3,6 @@ import TodoService from '../../services/todo.service';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
 import { TodoCreateInterface } from '../../interfaces/todo-create.interface';
 import { TodoInterface } from '../../interfaces/todo.interface';
-import handleServiceError from '../../utils/error-handler';
 
 interface BoardContextInterface {
   todos: TodoInterface[];
@@ -12,7 +11,11 @@ interface BoardContextInterface {
   indexTodo: (todoId: string) => Promise<TodoInterface | undefined>;
   updateTodo: (todoId: string, todoData: TodoCreateInterface) => Promise<void>;
   deleteTodo: (todoId: string) => void;
-  changeStatus: (todoId: string, changeStatusTo: TodoStatusEnum) => void;
+  changeStatus: (
+    todoId: string,
+    changeStatusTo: TodoStatusEnum,
+    password?: string,
+  ) => void;
   randomTodoGeneration: () => void;
 }
 
@@ -70,8 +73,13 @@ export function BoardProvider({
   const changeStatus = async (
     todoId: string,
     changeStatusTo: TodoStatusEnum,
+    password?: string,
   ): Promise<void> => {
-    const updatedTodo = await TodoService.changeStatus(todoId, changeStatusTo);
+    const updatedTodo = await TodoService.changeStatus(
+      todoId,
+      changeStatusTo,
+      password,
+    );
     _setTodos([
       ...todos.filter(todo => todo.id !== updatedTodo.id),
       updatedTodo,

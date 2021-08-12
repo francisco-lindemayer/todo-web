@@ -60,7 +60,9 @@ export function CardCreateComponent({
   return (
     <Modal open={open} onClose={onClose} className={classes.modal}>
       <div className={classes.container}>
-        <Typography variant="h6">Teste</Typography>
+        <Typography variant="body2">
+          Informe os dados para inclusão da tarefa
+        </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             label="Responsável"

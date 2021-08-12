@@ -79,6 +79,7 @@ class TodoService {
   public async changeStatus(
     todoId: string,
     status: TodoStatusEnum,
+    password?: string,
   ): Promise<TodoInterface> {
     try {
       if (environment.mockmode) {
@@ -88,6 +89,7 @@ class TodoService {
         `${prefix}/${todoId}/status`,
         {
           status,
+          password,
         },
       );
       return data;

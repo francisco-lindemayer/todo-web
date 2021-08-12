@@ -6,6 +6,7 @@ import { useStyles } from './card.styles';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
 import { CardDetailComponent } from './card-detail.component';
 import { useBoardContext } from '../board/board.context';
+import { PermissionComponent } from '../permission/permission.component';
 
 interface CardComponentProps {
   index: number;
@@ -18,19 +19,28 @@ export function CardComponent({
 }: CardComponentProps): JSX.Element {
   const { description, email, name, status } = todo;
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
+  const [openPermission, setOpenPermission] = useState(false);
   const { changeStatus, deleteTodo } = useBoardContext();
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpenDetail = () => {
+    setOpenDetail(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseDetail = () => {
+    setOpenDetail(false);
   };
 
-  const handleReopen = async () => {
-    await changeStatus(todo.id, TodoStatusEnum.OPENED);
+  const handleAuthorize = async (password: string) => {
+    await changeStatus(todo.id, TodoStatusEnum.OPENED, password);
+  };
+
+  const handleOpenPermission = () => {
+    setOpenPermission(true);
+  };
+
+  const handleClosePermission = () => {
+    setOpenPermission(false);
   };
 
   const handleConclude = async () => {
@@ -50,7 +60,7 @@ export function CardComponent({
               <Delete />
             </IconButton>
             {status === TodoStatusEnum.CONCLUDED && (
-              <IconButton onClick={handleReopen}>
+              <IconButton onClick={handleOpenPermission}>
                 <ThumbUp className={classes.conclude} />
               </IconButton>
             )}
@@ -60,16 +70,29 @@ export function CardComponent({
               </IconButton>
             )}
           </div>
-          <Typography variant="subtitle2">{description}</Typography>
-          <Typography noWrap variant="caption">
-            {email}
-          </Typography>
-          <Typography noWrap variant="caption">
-            {name}
-          </Typography>
+          <Container className={classes.content} onClick={handleOpenDetail}>
+            <Typography variant="subtitle2">{description}</Typography>
+            <Typography noWrap variant="caption">
+              {email}
+            </Typography>
+            <Typography noWrap variant="caption">
+              {name}
+            </Typography>
+          </Container>
         </Container>
       </Box>
-      <CardDetailComponent todo={todo} open={open} onClose={handleClose} />
+      <CardDetailComponent
+        todo={todo}
+        open={openDetail}
+        onClose={handleCloseDetail}
+      />
+      <PermissionComponent
+        open={openPermission}
+        onClose={handleClosePermission}
+        onAuthorize={(password: string) => {
+          handleAuthorize(password);
+        }}
+      />
     </>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Paper } from '@material-ui/core';
 import { BoardProvider } from './board.context';
 import { ListComponent } from '../list/list.component';
 import { useStyles } from './board.styles';

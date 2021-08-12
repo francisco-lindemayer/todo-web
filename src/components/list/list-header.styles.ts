@@ -3,23 +3,21 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles({
   container: {
     display: 'flex',
-    flexDirection: 'column',
-    margin: '16px',
-  },
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: '16px',
     minWidth: '380px',
-    background: '#2b6bc4',
-    overflow: 'auto',
     borderRadius: '8px',
+    background: '#3f51b5',
+    minHeight: '60px',
   },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '80px',
+  action: {},
+  header: {},
+  boxTitle: {
+    padding: '8px',
+  },
+  title: {
+    color: '#ffff',
   },
   fab: {
     margin: '8px',
