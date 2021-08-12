@@ -10,7 +10,10 @@ interface BoardContextInterface {
   requestDataReload: () => void;
   createTodo: (todoData: TodoCreateInterface) => Promise<string | undefined>;
   indexTodo: (todoId: string) => Promise<TodoInterface | undefined>;
-  // updateTodo: (todoData: TodoCreateInterface) => boolean;
+  updateTodo: (
+    todoId: string,
+    todoData: TodoCreateInterface,
+  ) => Promise<string | undefined>;
   // deleteTodo: (todoId: string) => boolean;
   // changeStatus: (todoId: string, changeStatusTo: TodoStatusEnum) => boolean;
   // randomTodoGeneration: () => void;
@@ -32,8 +35,16 @@ export function BoardProvider({
     todoData: TodoCreateInterface,
   ): Promise<string | undefined> => {
     const createdTodo = await TodoService.create(todoData);
-    console.log('criou?', createdTodo);
     _setTodos([...todos, createdTodo]);
+    return undefined;
+  };
+
+  const updateTodo = async (
+    todoId: string,
+    todoData: TodoCreateInterface,
+  ): Promise<string | undefined> => {
+    const updatedTodo = await TodoService.update(todoId, todoData);
+    _setTodos([...todos, updatedTodo]);
     return undefined;
   };
 
@@ -64,7 +75,7 @@ export function BoardProvider({
 
   return (
     <BoardContext.Provider
-      value={{ todos, requestDataReload, createTodo, indexTodo }}
+      value={{ todos, requestDataReload, createTodo, indexTodo, updateTodo }}
     >
       {children}
     </BoardContext.Provider>
