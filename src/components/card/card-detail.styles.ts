@@ -4,10 +4,11 @@ export const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    width: '200px',
+    width: '800px',
+    maxWidth: '90vw',
+    height: '80vh',
+    marginTop: '15vh',
     background: '#ccc9dc',
-    margin: '8px',
-    padding: '8px',
     borderRadius: '8px',
   },
   opened: {
