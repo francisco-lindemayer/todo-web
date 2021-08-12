@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Container, Typography } from '@material-ui/core';
-import { ThumbUp, ThumbDown, Launch } from '@material-ui/icons';
+import { ThumbUp, ThumbDown, Delete } from '@material-ui/icons';
 import { TodoInterface } from '../../interfaces/todo.interface';
 import { useStyles } from './card.styles';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
@@ -31,17 +31,22 @@ export function CardComponent({
     <>
       <Box>
         <Container className={classes.container}>
-          <Launch onClick={handleOpen} />
-          {status === TodoStatusEnum.CONCLUDED && (
-            <ThumbUp className={classes.conclude} />
-          )}
-          {status === TodoStatusEnum.OPENED && (
-            <ThumbDown className={classes.opened} />
-          )}
+          <div className={classes.action}>
+            <Delete onClick={handleOpen} />
+            {status === TodoStatusEnum.CONCLUDED && (
+              <ThumbUp className={classes.conclude} />
+            )}
+            {status === TodoStatusEnum.OPENED && (
+              <ThumbDown className={classes.opened} />
+            )}
+          </div>
           <Typography variant="subtitle2">{description}</Typography>
-          <Typography>{email}</Typography>
-          <Typography>{name}</Typography>
-          <Typography>{status}</Typography>
+          <Typography noWrap variant="caption">
+            {email}
+          </Typography>
+          <Typography noWrap variant="caption">
+            {name}
+          </Typography>
         </Container>
       </Box>
       <CardDetailComponent todo={todo} open={open} onClose={handleClose} />

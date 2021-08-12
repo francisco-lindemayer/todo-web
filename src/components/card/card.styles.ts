@@ -10,6 +10,10 @@ export const useStyles = makeStyles({
     padding: '8px',
     borderRadius: '8px',
   },
+  action: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   opened: {
     color: 'grey',
   },

@@ -19,8 +19,4 @@ export const useStyles = makeStyles({
   field: {
     margin: '8px',
   },
-  multiline: {
-    margin: '8px',
-    height: '300px',
-  },
 });

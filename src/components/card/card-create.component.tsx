@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, TextField, Button } from '@material-ui/core';
+import { Modal, TextField, Button, Typography } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
@@ -60,6 +60,7 @@ export function CardCreateComponent({
   return (
     <Modal open={open} onClose={onClose} className={classes.modal}>
       <div className={classes.container}>
+        <Typography variant="h6">Teste</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             label="Responsável"

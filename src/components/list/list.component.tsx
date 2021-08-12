@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, List, Box, Tooltip, Fab } from '@material-ui/core';
+import { Paper, List, Box, Tooltip, Fab, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
 import { useBoardContext } from '../board/board.context';
@@ -25,8 +25,8 @@ export function ListComponent({ status }: ListComponentProps): JSX.Element {
   };
 
   return (
-    <Paper className={classes.container}>
-      <div className={classes.header}>
+    <div className={classes.container}>
+      <div className={classes.action}>
         {status === TodoStatusEnum.OPENED && (
           <Tooltip title="Adicionar tarefa">
             <Fab
@@ -40,18 +40,21 @@ export function ListComponent({ status }: ListComponentProps): JSX.Element {
           </Tooltip>
         )}
       </div>
-      <List className={classes.list}>
-        {todos
-          .filter(todo => todo.status === status)
-          .map((todo, index) => (
-            <CardComponent key={todo.id} index={index} todo={todo} />
-          ))}
-      </List>
-      <CardCreateComponent
-        open={openCreate}
-        onClose={handleCloseCreate}
-        onCreate={() => setOpenCreate(false)}
-      />
-    </Paper>
+      <Paper className={classes.paper}>
+        <Typography className={classes.title}>{status}</Typography>
+        <List className={classes.list}>
+          {todos
+            .filter(todo => todo.status === status)
+            .map((todo, index) => (
+              <CardComponent key={todo.id} index={index} todo={todo} />
+            ))}
+        </List>
+        <CardCreateComponent
+          open={openCreate}
+          onClose={handleCloseCreate}
+          onCreate={() => setOpenCreate(false)}
+        />
+      </Paper>
+    </div>
   );
 }
