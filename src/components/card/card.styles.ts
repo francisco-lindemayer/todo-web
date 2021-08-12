@@ -16,7 +16,7 @@ export const useStyles = makeStyles({
   },
   action: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   opened: {
     color: 'grey',

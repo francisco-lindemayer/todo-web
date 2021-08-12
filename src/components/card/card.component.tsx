@@ -56,9 +56,11 @@ export function CardComponent({
       <Box>
         <Container className={classes.container}>
           <div className={classes.action}>
-            <IconButton onClick={handleDelete}>
-              <Delete />
-            </IconButton>
+            {status === TodoStatusEnum.OPENED && (
+              <IconButton onClick={handleDelete}>
+                <Delete />
+              </IconButton>
+            )}
             {status === TodoStatusEnum.CONCLUDED && (
               <IconButton onClick={handleOpenPermission}>
                 <ThumbUp className={classes.conclude} />

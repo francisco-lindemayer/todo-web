@@ -22,6 +22,7 @@ export function CardDetailComponent({
   return (
     <Modal open={open} onClose={onClose}>
       <Container className={classes.container}>
+        <Typography variant="subtitle1">Detalhe</Typography>
         {status === TodoStatusEnum.CONCLUDED && (
           <ThumbUp className={classes.conclude} />
         )}

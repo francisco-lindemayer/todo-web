@@ -4,9 +4,9 @@ export const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    width: '600px',
+    width: '400px',
     maxWidth: '90vw',
-    height: '80vh',
+    height: '50vh',
     marginTop: '15vh',
     background: '#ccc9dc',
     borderRadius: '8px',
