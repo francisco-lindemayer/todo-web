@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Container, Typography, IconButton } from '@material-ui/core';
 import { ThumbUp, ThumbDown, Delete } from '@material-ui/icons';
 import { TodoInterface } from '../../interfaces/todo.interface';
 import { useStyles } from './card.styles';
 import { TodoStatusEnum } from '../../enum/todo-status.enum';
 import { CardDetailComponent } from './card-detail.component';
+import { useBoardContext } from '../board/board.context';
 
 interface CardComponentProps {
   index: number;
@@ -18,6 +19,7 @@ export function CardComponent({
   const { description, email, name, status } = todo;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const { changeStatus, deleteTodo } = useBoardContext();
 
   const handleOpen = () => {
     setOpen(true);
@@ -27,17 +29,35 @@ export function CardComponent({
     setOpen(false);
   };
 
+  const handleReopen = async () => {
+    await changeStatus(todo.id, TodoStatusEnum.OPENED);
+  };
+
+  const handleConclude = async () => {
+    await changeStatus(todo.id, TodoStatusEnum.CONCLUDED);
+  };
+
+  const handleDelete = async () => {
+    await deleteTodo(todo.id);
+  };
+
   return (
     <>
       <Box>
         <Container className={classes.container}>
           <div className={classes.action}>
-            <Delete onClick={handleOpen} />
+            <IconButton onClick={handleDelete}>
+              <Delete />
+            </IconButton>
             {status === TodoStatusEnum.CONCLUDED && (
-              <ThumbUp className={classes.conclude} />
+              <IconButton onClick={handleReopen}>
+                <ThumbUp className={classes.conclude} />
+              </IconButton>
             )}
             {status === TodoStatusEnum.OPENED && (
-              <ThumbDown className={classes.opened} />
+              <IconButton onClick={handleConclude}>
+                <ThumbDown className={classes.opened} />
+              </IconButton>
             )}
           </div>
           <Typography variant="subtitle2">{description}</Typography>
