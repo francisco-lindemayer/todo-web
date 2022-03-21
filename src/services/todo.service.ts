@@ -1,5 +1,5 @@
 import { TodoInterface } from '../interfaces/todo.interface';
-import { api } from './api';
+import { api } from './api.service';
 import { showTodoMock, indexTodoMock } from '../mock/todo.mock';
 import { environment } from '../config/api-server.config';
 import handleServiceError from '../utils/error-handler';
